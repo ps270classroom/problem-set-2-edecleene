@@ -99,9 +99,11 @@ Create a histogram of this variable for just the US House races. Save the ggplot
 ## Answer 3
 
 ```{r}
-fb_ads = fb_ads %>% mutate(impressions_millions= impressions / 1e6)
+fb_ads = fb_ads %>% 
+  filter(office == "US House") %>%
+  mutate(impressions_millions= impressions / 1e6)
 
-plot_q3 <- fb_ads %>% filter(office == "US House") %>% 
+plot_q3 <- fb_ads %>% 
   ggplot(mapping=aes(x=impressions_millions)) +
   geom_histogram()
 
@@ -132,7 +134,6 @@ You do not need to exactly match the labels, but you should have informative lab
 
 ```{r}
 fb_top_plot <- fb_ads %>% 
-  filter(office == "US House") %>% 
   arrange(desc(impressions_millions)) %>% 
   head(15) %>% 
   ggplot(mapping=aes(y=reorder(cand_name_last, impressions_millions), x=impressions_millions, fill=party)) +
