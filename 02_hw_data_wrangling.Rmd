@@ -100,10 +100,10 @@ Create a histogram of this variable for just the US House races. Save the ggplot
 
 ```{r}
 fb_ads = fb_ads %>% 
-  filter(office == "US House") %>%
-  mutate(impressions_millions= impressions / 1e6)
+  mutate(impressions_millions = impressions / 1e6)
 
 plot_q3 <- fb_ads %>% 
+  filter(office == "US House") %>%
   ggplot(mapping=aes(x=impressions_millions)) +
   geom_histogram()
 
@@ -134,9 +134,9 @@ You do not need to exactly match the labels, but you should have informative lab
 
 ```{r}
 fb_top_plot <- fb_ads %>% 
-  arrange(desc(impressions_millions)) %>% 
+  arrange(desc(impressions_millions)) %>%
   head(15) %>% 
-  ggplot(mapping=aes(y=reorder(cand_name_last, impressions_millions), x=impressions_millions)) +
+  ggplot(mapping=aes(y=fct_reorder(cand_name_last, impressions_millions), x=impressions_millions)) +
   geom_col(mapping=aes(fill=party)) +
   scale_fill_manual(values=c("R"="red", "D"="blue")) +
   labs(title="Top 15 House Candidate Facebook Ad Impressions, 2017-2018", x="Facebook Ad Impressions (in millions)", y="Candidate Last Name") +
